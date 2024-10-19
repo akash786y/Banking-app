@@ -1,0 +1,12 @@
+
+application*.properties
+
+.gradle/
+
+build/
+
+*.class
+
+
+
+

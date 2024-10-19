@@ -28,7 +28,6 @@ public class Account {
     @JoinColumn(name = "user_id")
     private User user;
 
-
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval=true, fetch = FetchType.LAZY)
     private List<Loan> loans;
 }

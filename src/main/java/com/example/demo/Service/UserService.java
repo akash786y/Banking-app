@@ -1,6 +1,7 @@
 package com.example.demo.Service;
 
 import com.example.demo.DTO.UserDTO;
+import com.example.demo.Model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,9 +9,9 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    String createUser(UserDTO userDTO);
+    User createUser(UserDTO userDTO);
     List<UserDTO> getAllUsers();
-    String deleteUser(Long id);
+    User deleteUser(Long id);
     UserDTO getUserById(Long id);
 
 }

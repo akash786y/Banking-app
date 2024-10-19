@@ -30,5 +30,5 @@ public class User {
     @OneToMany
     private List<Stock> stocksList;
 
-    private List<String> roles;
+    private String role;
 }

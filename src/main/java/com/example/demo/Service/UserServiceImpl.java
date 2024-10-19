@@ -22,25 +22,18 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public String createUser(UserDTO userDTO){
+    public User createUser(UserDTO userDTO){
+
         User user = User.builder()       // converting UDerDTO to User(entity)
                         .id(userDTO.getId())
                         .name(userDTO.getName())
                         .email(userDTO.getEmail())
                         .password(userDTO.getPassword())
-                        .accounts(userDTO.getAccounts()
-                                .stream()
-                                .map(accountDTO-> Account.builder()
-                                        .id(accountDTO.getId())
-                                        .accountNumber(accountDTO.getAccountNumber())
-                                        .balance(accountDTO.getBalance())
-                                        .user(userRepository.findById(accountDTO.getUserId()).orElseThrow(RuntimeException::new))
-                                        .build())
-                                .toList()
-                        )
+                        .role(userDTO.getRole())
                         .build();
+
         userRepository.save(user);
-        return "User successfully created";
+        return user;
     }
 
     @Override
@@ -52,22 +45,18 @@ public class UserServiceImpl implements UserService{
                 .map(user -> UserDTO.builder()
                         .id(user.getId())
                         .name(user.getName())
-                        .accounts(user.getAccounts()
-                                .stream()
-                                .map(account -> toAccountDTO(account))
-                                .toList()
-                        )
                         .password(user.getPassword())
                         .email(user.getEmail())
+                        .role(user.getRole())
                         .build())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public String deleteUser(Long id) {
+    public User deleteUser(Long id) {
         User user = userRepository.findById(id).orElseThrow();
         userRepository.delete(user);
-        return "User deleted successfully";
+        return user;
     }
 
     @Override
@@ -76,11 +65,6 @@ public class UserServiceImpl implements UserService{
         return UserDTO.builder()
                 .id(user.getId())
                 .name(user.getName())
-                .accounts(user.getAccounts()
-                        .stream()
-                        .map(account -> toAccountDTO(account))
-                        .toList()
-                )
                 .password(user.getPassword())
                 .email(user.getEmail())
                 .build();
